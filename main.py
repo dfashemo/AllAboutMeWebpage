@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import RegistrationForm
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_behind_proxy import FlaskBehindProxy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)                    
 proxied = FlaskBehindProxy(app)
@@ -13,6 +14,22 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.config['SECRET_KEY'] = '342983a04237f3a7d7d98db26c404908'
 
+#Set up table
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///new_friends.db'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  username = db.Column(db.String(20), unique=True, nullable=False)
+  email = db.Column(db.String(120), unique=True, nullable=False)
+
+  def __repr__(self):
+    return f"User('{self.username}', '{self.email}')"
+
+with app.app_context():
+  db.create_all()
+
+#More app config
 app.debug = True
 toolbar = DebugToolbarExtension(app)
 
@@ -49,6 +66,9 @@ def register_success():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit(): 
+        user = User(username=form.username.data, email=form.email.data)
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('register_success')) 
     return render_template('register.html', title='Register', form=form)
