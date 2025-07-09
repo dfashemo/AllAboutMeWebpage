@@ -17,8 +17,13 @@ app.config['SECRET_KEY'] = '342983a04237f3a7d7d98db26c404908'
 app.debug = True
 toolbar = DebugToolbarExtension(app)
 
+#Ensuring database persistence
+basedir = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(basedir, 'new_friends.db')
+
 #Set up table
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///new_friends.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///new_friends.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User(db.Model):
