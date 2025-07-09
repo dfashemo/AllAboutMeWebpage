@@ -14,6 +14,9 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.config['SECRET_KEY'] = '342983a04237f3a7d7d98db26c404908'
 
+app.debug = True
+toolbar = DebugToolbarExtension(app)
+
 #Set up table
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///new_friends.db'
 db = SQLAlchemy(app)
@@ -28,10 +31,6 @@ class User(db.Model):
 
 with app.app_context():
   db.create_all()
-
-#More app config
-app.debug = True
-toolbar = DebugToolbarExtension(app)
 
 @app.route("/")                         
 def hello_world():
@@ -77,7 +76,7 @@ def register():
 @app.route("/update_server", methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        repo = git.Repo('/home/demi0aam0webpage/AllAboutMeWebpage')
+        repo = git.Repo('/home/demi0aam0webpage/AllAboutMeWebpage/new_friends')
         origin = repo.remotes.origin
         origin.pull()
         return 'Updated PythonAnywhere successfully', 200
