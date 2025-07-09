@@ -1,0 +1,32 @@
+The error stack trace I got:
+
+127.0.0.1 - - [08/Jul/2025 16:37:05] "POST /register HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask_behind_proxy.py", line 25, in __call__
+    return self.app(environ, start_response)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask_debugtoolbar/__init__.py", line 222, in dispatch_request
+    return view_func(**view_args)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/main.py", line 43, in register
+    return redirect(url_for('home')) # if so - send to home page
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/helpers.py", line 232, in url_for
+    return current_app.url_for(
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 1121, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/flask/app.py", line 1110, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/Users/dfashemo/seoTechDev/All About Me Webpage!/venv/lib/python3.9/site-packages/werkzeug/routing/map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint '/'. Did you mean 'favorites' instead?
+
+
+passed in the actual endpoint, but you need to pass in the name of the function instead

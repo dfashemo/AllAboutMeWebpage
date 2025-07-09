@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="row align-items-start">
+    <div class="col-md-8">
+      <h2>{{ subtitle }}</h2>
+      <p>{{ text }}</p>
+
+      <b>Name:</b>
+      <p>Obademilade Mary-anne Fashemo</p>
+
+      <b>Nicknames:</b>
+      <p>Demi, Dem, etc.!</p>
+
+      <b>Age:</b>
+      <p>19</p>
+
+      <b>Birthday:</b>
+      <p>September 8th, 2005</p>
+
+      <b>Born:</b>
+      <p>Corpus Christi, Texas</p>
+
+      <b>Living in:</b>
+      <p>Dallas, Texas</p>
+
+      <b>Book I'm Reading Right Now:</b>
+      <p>Becoming Me - Viola Davis</p>
+
+      <b>Current Mood:</b>
+      <p>Hungry</p>
+    </div>
+
+
+    <!-- meeee -->
+    <div class="col-md-4 text-end">
+      <img
+        src="{{ url_for('static', filename='images/me.jpg') }}"
+        alt="Portrait of me"
+        class="img-fluid rounded"
+        style="
+          width: 1000px;
+          height: 600px;
+          margin-top: 40px;
+          object-fit: cover;
+        "
+      >
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <!-- collage -->
+  <div id="about-gallery" class="grid">
+    {% for img in about_images %}
+      <div class="grid-item">
+        <img
+          src="{{ url_for('static', filename='images/about-me/' ~ img) }}"
+          alt="{{ img }}"
+          class="img-fluid rounded"
+        >
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- masonry logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('#about-gallery');
+      imagesLoaded(grid, () => {
+        new Masonry(grid, {
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          gutter: 10
+        });
+      });
+    });
+  </script>
+
+{% endblock content %}

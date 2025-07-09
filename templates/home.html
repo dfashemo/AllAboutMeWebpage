@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>{{ subtitle }}</h2>
+  <p>Hi! Welcome to my All About Me Website!</p>
+
+  <!-- Masonry container -->
+  <div id="gallery" class="grid">
+    {% for img in images %}
+      <div class="grid-item">
+        <img
+          src="{{ url_for('static', filename='images/album/' ~ img) }}"
+          alt="{{ img }}"
+          class="img-fluid"
+          style="width:100%; display:block;"
+        >
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Initialize Masonry after images load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('#gallery');
+      imagesLoaded(grid, () => {
+        new Masonry(grid, {
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          gutter: 10
+        });
+      });
+    });
+  </script>
+{% endblock content %}  

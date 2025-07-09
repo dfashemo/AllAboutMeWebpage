@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>{{ subtitle }}</h2>
+  <p>{{ text }}</p>
+  <p></p>
+  <h2>Favorite Color:</h2>
+  <p>Blue! (felt like making this site purple though)</p>
+  <h2>Favorite Food (Right now):</h2>
+  <p>Efo Riro</p>
+  <h2>Favorite People:</h2>
+  <p>My Sisters! (most of the time) - current favorite: {{fav_sis}}</p>
+
+  <div id="favorites-gallery" class="grid">
+    {% for img in images %}
+      <div class="grid-item">
+        <img
+          src="{{ url_for('static', filename='images/sisters/' ~ img) }}"
+          alt="{{ img }}"
+          class="img-fluid"
+        >
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('#favorites-gallery');
+      imagesLoaded(grid, () => {
+        new Masonry(grid, {
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          gutter: 10
+        });
+      });
+    });
+  </script>
+{% endblock content %}
